@@ -60,7 +60,21 @@ body {
 }
 
 .card__face--back {
-  background: white;
+  background: beige;
   transform: rotateY(180deg);
   border: 1px solid black;
+}
+
+.info-board {
+  width: 50px;
+  height: 25px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgb(247, 247, 220);
+  color: black;
+  border: 1px black solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

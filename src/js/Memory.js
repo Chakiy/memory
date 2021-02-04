@@ -1,7 +1,7 @@
 import Card from "./Card.js";
 
 class Memory {
-  constructor(lvl = 1) {
+  constructor(lvl = 2) {
     this._allIcons = [];
     this._lvl = lvl;
     // this._username = username;
@@ -25,7 +25,18 @@ class Memory {
   }
   init() {
     //initiele html opbouwen (<div id="grid"></div>)
-    document.body.insertAdjacentHTML(
+    let body = document.body;
+    body.insertAdjacentHTML(
+      "beforeend",
+      `
+        <div class="info-board">
+        <p class="lvl"> ${this._lvl}</p>
+
+        </div>
+    `
+    );
+
+    body.insertAdjacentHTML(
       "afterbegin",
       `
         <div class="grid"></div> 
@@ -64,17 +75,59 @@ class Memory {
   startLevel() {
     // op basis van levelnr
     // while(this._lvl < ){
-    // if ((this._lvl === 2)) {
-    //   let card = new Card(document.querySelector(".grid"), "home");
-    //   let card2 = new Card(document.querySelector(".grid"), "home2");
+    // if ((this._lvl = 2)) {
+    //   let card = new Card(document.querySelector(".grid"), this._allIcons[11]);
+    //   let card2 = new Card(document.querySelector(".grid"), this._allIcons[11]);
     // }
+    const icons = [];
+    const count = this._level * 2;
+    while (icons.length !== count) {
+      let randomIcon = this._allIcons[
+        Math.floor(Math.random() * this._allIcons.length)
+      ];
+      if (icons.indexOf(randomIcon) === -1) {
+        icons.push(randomIcon);
+      }
+      const allCards = [...icons, ...icons];
+
+      // Shuffle array
+      const shuffled = allCards.sort(() => 0.5 - Math.random());
+
+      // Get sub-array of first n elements after shuffled
+      let selected = shuffled.slice(0, 4);
+      // console.log(selected);
+
+      //CREATE CARDS
+
+      let n = selected.length;
+      // const holder = document.querySelector(".grid");
+      // new Card(holder, selected);
+      while (n > 0) {
+        new Card(".grid", selected);
+        n--;
+      }
+    }
+
+    // function shuffle(a) {
+    //   let i, s, x;
+    //   for (i = a.length - 1; i > 0; i--) {
+    //     s = Math.floor(Math.random() * (i + 1));
+    //     x = a[i];
+    //     a[i] = a[s];
+    //     a[s] = x;
+    //   }
+    //   return a;
+    // }
+
+    // //SHUFFLE ARRAY
+    // shuffle(allCards);
 
     // }
     //x aantal Card plaatsen in #grid
     //op basis van levelNr aantal unieke items uit array halen
-    new Card(".grid", "pencil||home||gear||tree||leaf");
-    const result = ["leaf", "gear"];
-    const allCards = [...result, ...result];
+    // new Card(".grid", "pencil||home||gear||tree||leaf");
+    // const result = ["leaf", "gear"];
+    // const allCards = [...result, ...result];
     //how to shuffle array
     //allCards.shuffle()
     //     1 => 2unieke => 4
