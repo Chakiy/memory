@@ -66,8 +66,8 @@ body {
 }
 
 .info-board {
-  width: 50px;
-  height: 25px;
+  width: 150px;
+  height: 50px;
   position: fixed;
   top: 0;
   left: 0;
@@ -75,6 +75,6 @@ body {
   color: black;
   border: 1px black solid;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }

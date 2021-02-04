@@ -3,12 +3,12 @@ export default class Card {
     this._holder = holder;
     this._icon = icon;
     this._flippedEvent = new CustomEvent("flipped", { detail: this });
-    this._ref = this.gegenerateInitialHtml();
+    this._ref = this.init();
     this._isFlipped = false;
     this.setUpEvents();
   }
 
-  gegenerateInitialHtml() {
+  init() {
     this._holder.insertAdjacentHTML(
       "beforeend",
       `

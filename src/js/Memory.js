@@ -1,18 +1,30 @@
 import Card from "./Card.js";
 
 class Memory {
-  constructor(lvl = 2) {
+  constructor(lvl = 1) {
     this._allIcons = [];
     this._lvl = lvl;
     // this._username = username;
+    // this._input = document.querySelector(".txt").value;
     this._first = null;
     this._second = null;
     this._selected = [];
     this._turned = [];
     this.fetchIcons();
+    this._a = null;
 
     //setUpEvents => luisteren naar flipped eventTypes
   }
+
+  // getInputValue() {
+  //   // Selecting the input element and get its value
+  //   const inputVal = document.getElementById("myInput").value;
+  //   const b = document.querySelector(".b");
+  //   b.oncl;
+  //   // Displaying the value
+  //   alert(inputVal);
+  //   return inputVal;
+  // }
 
   fetchIcons() {
     fetch("../../icons/selection.json")
@@ -24,14 +36,14 @@ class Memory {
       .catch((error) => console.log(error));
   }
   init() {
-    //initiele html opbouwen (<div id="grid"></div>)
+    // initiele html opbouwen (<div id="grid"></div>)
+
     let body = document.body;
     body.insertAdjacentHTML(
-      "beforeend",
+      "afterbegin",
       `
         <div class="info-board">
-        <p class="lvl"> ${this._lvl}</p>
-
+        <p class="lvl"> level ${this._lvl}</p>
         </div>
     `
     );
@@ -44,7 +56,6 @@ class Memory {
     );
     this._htmlRef = document.querySelector(".grid");
     this.setUpEvents();
-
     this.startLevel();
   }
 
@@ -72,68 +83,40 @@ class Memory {
     });
   }
 
-  startLevel() {
-    // op basis van levelnr
-    // while(this._lvl < ){
-    // if ((this._lvl = 2)) {
-    //   let card = new Card(document.querySelector(".grid"), this._allIcons[11]);
-    //   let card2 = new Card(document.querySelector(".grid"), this._allIcons[11]);
-    // }
-    const icons = [];
-    const count = this._level * 2;
-    while (icons.length !== count) {
-      let randomIcon = this._allIcons[
-        Math.floor(Math.random() * this._allIcons.length)
-      ];
-      if (icons.indexOf(randomIcon) === -1) {
-        icons.push(randomIcon);
-      }
-      const allCards = [...icons, ...icons];
+  startLevel = () => {
+    const aantalXCardsOpLvl = this._lvl * 2;
+    const shuffled = this._allIcons.sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, aantalXCardsOpLvl);
+    const allPlayCards = this.shuffleArrOfCards([...selected, ...selected]);
+    this._allPlayCardsLength = allPlayCards.length;
+    allPlayCards.forEach((element) => {
+      new Card(document.querySelector(".grid"), element);
+    });
+  };
 
-      // Shuffle array
-      const shuffled = allCards.sort(() => 0.5 - Math.random());
-
-      // Get sub-array of first n elements after shuffled
-      let selected = shuffled.slice(0, 4);
-      // console.log(selected);
-
-      //CREATE CARDS
-
-      let n = selected.length;
-      // const holder = document.querySelector(".grid");
-      // new Card(holder, selected);
-      while (n > 0) {
-        new Card(".grid", selected);
-        n--;
-      }
+  shuffleArrOfCards = (arr) => {
+    let lng = arr.length,
+      glob,
+      i;
+    while (lng > 0) {
+      i = Math.floor(Math.random() * lng);
+      lng--;
+      glob = arr[lng];
+      arr[lng] = arr[i];
+      arr[i] = glob;
     }
-
-    // function shuffle(a) {
-    //   let i, s, x;
-    //   for (i = a.length - 1; i > 0; i--) {
-    //     s = Math.floor(Math.random() * (i + 1));
-    //     x = a[i];
-    //     a[i] = a[s];
-    //     a[s] = x;
-    //   }
-    //   return a;
-    // }
-
-    // //SHUFFLE ARRAY
-    // shuffle(allCards);
-
-    // }
-    //x aantal Card plaatsen in #grid
-    //op basis van levelNr aantal unieke items uit array halen
-    // new Card(".grid", "pencil||home||gear||tree||leaf");
-    // const result = ["leaf", "gear"];
-    // const allCards = [...result, ...result];
-    //how to shuffle array
-    //allCards.shuffle()
-    //     1 => 2unieke => 4
-    // 2 => 4unieke => 8
-    // 3 => 8unieke => 16
-  }
+    return arr;
+  };
+  // function shuffle(a) {
+  //   let i, s, x;
+  //   for (i = a.length - 1; i > 0; i--) {
+  //     s = Math.floor(Math.random() * (i + 1));
+  //     x = a[i];
+  //     a[i] = a[s];
+  //     a[s] = x;
+  //   }
+  //   return a;
+  // }
 }
 
 export default Memory;
