@@ -13,18 +13,27 @@ class Memory {
     this.fetchIcons();
     this._a = null;
 
-    //setUpEvents => luisteren naar flipped eventTypes
+    if (localStorage.get("meme")) {
+      const persistedData = JSON.parse(localStorage.getItem("meme"));
+      this._lvl = persistedData.lvl;
+      this._allIcons = persistedData.icons;
+
+      this.startLevel();
+      this.init();
+    } else {
+      this.fetchIcons();
+    }
   }
 
-  // getInputValue() {
-  //   // Selecting the input element and get its value
-  //   const inputVal = document.getElementById("myInput").value;
-  //   const b = document.querySelector(".b");
-  //   b.oncl;
-  //   // Displaying the value
-  //   alert(inputVal);
-  //   return inputVal;
-  // }
+  saveToPersist() {
+    localStorage.setItem(
+      "meme",
+      JSON.stringify({
+        lvl: this._lvl,
+        allCards: this._allIcons,
+      })
+    );
+  }
 
   fetchIcons() {
     fetch("../../icons/selection.json")
@@ -107,16 +116,6 @@ class Memory {
     }
     return arr;
   };
-  // function shuffle(a) {
-  //   let i, s, x;
-  //   for (i = a.length - 1; i > 0; i--) {
-  //     s = Math.floor(Math.random() * (i + 1));
-  //     x = a[i];
-  //     a[i] = a[s];
-  //     a[s] = x;
-  //   }
-  //   return a;
-  // }
 }
 
 export default Memory;
